@@ -1,17 +1,34 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+/**
+ * 
+ * Removing { TerserPlugin } from production config
+ * In production mode Terserplugin will be included by default
+ * const TerserPlugin = require('terser-webpack-plugin');
+ */
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './index.js',
+    /**
+     *  Entry for multiple app index file
+     */
+    entry: {
+        btn: './buttonWithText.js',
+        kiwi: './kiwi.js'
+    },
+
+    /**
+     *  resovlve name for multiple app index file
+     */
     output: {
-        filename: 'bundle.[contenthash].js',
+        filename: '[name].[hash].js',
         path: path.resolve(__dirname, './dist')
     },
-    mode: 'none',
+    mode: 'production',
     module: {
         rules: [
             {
@@ -35,17 +52,32 @@ module.exports = {
                         presets: ['stage-0']
                     }
                 }
+            },
+            {
+                test: /\.hbs$/,
+                use: ['handlebars-loader']
             }
         ]
     },
     plugins: [
-        new TerserPlugin(),
+        /**
+         * 
+         * Removing { new TerserPlugin() } from production config
+         * In production mode Terserplugin will be included by default
+         * new TerserPlugin(),
+         */
+
+        /**
+            *  Entry for multiple app index files STYLES
+            */
         new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
+            filename: '[name].[hash].css'
         }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Webpack Demo'
+            title: 'webpack demo',
+            template: 'index.hbs',
+            description: 'some description'
         })
     ]
 }

@@ -1,6 +1,13 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+
+/**
+ * 
+ * Removing { TerserPlugin } from production config
+ * In production mode Terserplugin will be included by default
+ * const TerserPlugin = require('terser-webpack-plugin');
+ */
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,7 +18,7 @@ module.exports = {
         filename: 'bundle.[hash].js',
         path: path.resolve(__dirname, './dist')
     },
-    mode: 'none',
+    mode: 'production',
     module: {
         rules: [
             {
@@ -35,22 +42,28 @@ module.exports = {
                         presets: ['stage-0']
                     }
                 }
+            },
+            {
+                test: /\.hbs$/,
+                use: ['handlebars-loader']
             }
         ]
     },
     plugins: [
-        new TerserPlugin(),
+        /**
+         * 
+         * Removing { new TerserPlugin() } from production config
+         * In production mode Terserplugin will be included by default
+         * new TerserPlugin(),
+         */
         new MiniCssExtractPlugin({
             filename: 'style.[hash].css'
         }),
         new CleanWebpackPlugin(),
-        /* This plugin will generate HTML with linked Scripts & Style sheets with custom data */
         new HtmlWebpackPlugin({
-            filename: 'index.[hash].html',
             title: 'webpack demo',
-            meta: {
-                description: 'some description'
-            }
+            template: 'index.hbs',
+            description: 'some description'
         })
     ]
 }

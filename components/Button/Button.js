@@ -12,7 +12,7 @@ import './Button.scss';
  */
 
 
-class HelloWorldButton {
+class Button {
 
     // This feature will be supported on latest browsers
     buttonCssClass = 'btn';
@@ -22,10 +22,10 @@ class HelloWorldButton {
     render() {
         const button = document.createElement('button');
         const body = document.querySelector('body');
-        button.innerHTML = 'Babel support for JS features';
+        button.innerHTML = 'Click me to show some text';
         button.onclick = function () {
             const p = document.createElement('p');
-            p.innerHTML = 'Babel support for JS features';
+            p.innerHTML = 'Hey, you have clicked!';
             p.classList.add(this.buttonCssClassTxt);
             body.appendChild(p);
         }
@@ -34,4 +34,4 @@ class HelloWorldButton {
     }
 }
 
-export default HelloWorldButton;
+export default Button;

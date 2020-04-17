@@ -35,6 +35,10 @@ module.exports = {
                         presets: ['stage-0']
                     }
                 }
+            },
+            {
+                test: /\.hbs$/,
+                use: ['handlebars-loader']
             }
         ]
     },
@@ -44,13 +48,11 @@ module.exports = {
             filename: 'style.[hash].css'
         }),
         new CleanWebpackPlugin(),
-        /* This plugin will generate HTML with linked Scripts & Style sheets with custom data */
+        // Mapping HBS template with plugin will use HBS template and pass this config value to template
         new HtmlWebpackPlugin({
-            filename: 'index.[hash].html',
             title: 'webpack demo',
-            meta: {
-                description: 'some description'
-            }
+            template: 'index.hbs',
+            description: 'some description'
         })
     ]
 }

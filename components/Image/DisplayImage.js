@@ -1,4 +1,5 @@
 import Kiwi from './kiwi.jpg';
+import './DisplayImage.scss';
 
 /**
  * Here we are using file-loader to resolve Image path in JS file
